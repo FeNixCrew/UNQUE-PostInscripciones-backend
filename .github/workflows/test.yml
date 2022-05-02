@@ -26,6 +26,12 @@ jobs:
       - name: Run tests
         run: ./gradlew test -i
 
+      - name: Update coverage report in Codacy
+        if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev')
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l Kotlin --force-language -r build/reports/jacoco/test/jacocoTestReport.xml
+  
   linter:
     needs: test
     runs-on: ubuntu-latest
