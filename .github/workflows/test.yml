@@ -32,5 +32,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          pull: true
           push: true
           tags: chestersan/proyectoejemplo:latest
