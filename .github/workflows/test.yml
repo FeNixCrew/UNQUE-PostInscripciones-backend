@@ -26,7 +26,7 @@ jobs:
         run: docker build -t app .
           
       - name: x
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrests.DOCKER_HUB_PASSWORD}}
+        run: docker login -u chestersan -p ad2cf87b-4a96-4989-8a62-ab650526ff9c
       
       - name: build
         run: docker tag app chestersan/proyectoejemplo
