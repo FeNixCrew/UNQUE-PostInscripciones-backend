@@ -34,4 +34,5 @@ jobs:
           context: .
           pull: true
           push: true
-          tags: chestersan/proyectoejemplo:latest
+          repository: chestersan/proyectoejemplo
+          tags: latest, ${{github.run_number}}
