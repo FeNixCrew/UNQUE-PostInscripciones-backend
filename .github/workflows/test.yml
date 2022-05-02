@@ -28,6 +28,7 @@ jobs:
 
 
   linter:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Kotlin Linter (ktlint)
