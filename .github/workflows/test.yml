@@ -26,3 +26,6 @@ jobs:
         run: ls
       - name: cd
         run: cd build/libs
+
+      - name: ohter
+        run: ls
