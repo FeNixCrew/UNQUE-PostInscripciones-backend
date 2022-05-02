@@ -38,7 +38,21 @@ jobs:
     steps:
       - name: Kotlin Linter (ktlint)
         uses: block42-blockchain-company/ktlint-action@v2.3
-
+        
+  publish-dockerhub:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2.10.0
+        with: 
+          username: ${{secrets.DOKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: chestersan/ejemploproyecto
+          tags: latest, #{{github.run_number}}
+      
 
   linter2:
     needs: [test,linter]
