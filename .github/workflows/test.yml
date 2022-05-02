@@ -16,7 +16,8 @@ jobs:
         with:
           java-version: 1.8
 
-      - run: gradle wrapper
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
 
       - run: ./gradlew bootJar
 
@@ -33,4 +34,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: chestersan/proyectoejemplo:latest, chestersan/proyectoejemplo:$GITHUB_RUN_NUMBER
+          tags: chestersan/proyectoejemplo:latest, chestersan/proyectoejemplo:1.${{github.run_number}}
