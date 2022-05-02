@@ -21,3 +21,15 @@ jobs:
 
       - name: Build
         run: ./gradlew assemble
+
+      - name: Scripts
+        run: docker build -t app .
+          
+      - name: x
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrests.DOCKER_HUB_PASSWORD}}
+      
+      - name: build
+        run: docker tag app chestersan/proyectoejemplo
+        
+      - name: push
+        run: docker push chestersan/proyectoejemplo
