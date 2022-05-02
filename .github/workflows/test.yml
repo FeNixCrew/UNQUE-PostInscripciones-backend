@@ -6,12 +6,12 @@ on:
       - '*'
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [1.8, 1.11]
+        java: [1.8]
     steps:
       - uses: actions/checkout@v2
 
@@ -25,3 +25,12 @@ jobs:
 
       - name: Run tests
         run: ./gradlew test -i
+
+
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kotlin Linter (ktlint)
+        uses: block42-blockchain-company/ktlint-action@v2.3
+
+    
