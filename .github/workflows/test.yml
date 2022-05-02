@@ -26,5 +26,3 @@ jobs:
         run: |
           docker build -t app .
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrests.DOCKER_HUB_PASSWORD}}
-          docker tag app chestersan/proyectoejemplo
-          docker push chestersan/proyectoejemplo
