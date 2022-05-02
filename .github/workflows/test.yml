@@ -22,10 +22,8 @@ jobs:
       - name: Build
         run: ./gradlew assemble
 
-      - name: ls
-        run: ls
       - name: cd
-        run: cd build/libs
+        run: ls build
 
-      - name: ohter
-        run: ls
+      - name: oth
+        run: ls build/libs
