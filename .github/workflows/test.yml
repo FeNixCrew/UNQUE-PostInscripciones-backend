@@ -35,4 +35,4 @@ jobs:
           pull: true
           push: true
           repository: chestersan/proyectoejemplo
-          tags: latest, ${{github.run_number}}
+          tags: latest
