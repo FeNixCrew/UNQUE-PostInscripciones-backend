@@ -35,4 +35,4 @@ jobs:
           pull: true
           push: true
           repository: chestersan/proyectoejemplo
-          tags: latest
+          tags: latest, 0.1
