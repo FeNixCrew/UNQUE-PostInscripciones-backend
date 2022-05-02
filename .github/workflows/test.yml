@@ -33,5 +33,4 @@ jobs:
         with:
           context: .
           push: true
-          repository: chestersan/proyectoejemplo
-          tags: latest, 0.1
+          tags: chestersan/proyectoejemplo:latest, chestersan/proyectoejemplo:$GITHUB_RUN_NUMBER
