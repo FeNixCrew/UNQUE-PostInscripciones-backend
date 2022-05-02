@@ -29,13 +29,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: chestersan/ejemploproyecto
           tags: latest, #{{github.run_number}}
-      
-
-  linter2:
-    needs: [test,linter]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Kotlin Linter (ktlint)
-        uses: block42-blockchain-company/ktlint-action@v2.3
-
 
