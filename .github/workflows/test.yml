@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  publish-dockerhub:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: ./gradlew assemble
 
-      - name: Logion
+      - name: Scripts
         run: |
           docker build -t app .
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrests.DOCKER_HUB_PASSWORD}}
