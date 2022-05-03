@@ -39,7 +39,4 @@ Aplicación para facilitar la asignación de sobre cupos de las materias de una 
     docker-compose up -d
     ```
     La aplicación se encontrara ejecutandose en el puerto indicado en ```SPRING_LOCAL_PORT:```
-    
-## Diagrama de relaciones
- 
-![Relaciones](imagenes/relaciones_1.4.jpg)
+   
