@@ -4,7 +4,7 @@ pipeline {
     stage('Run tests') {
       steps() {
         sh 'chmod +x gradlew'
-        sh './gradlew build jar'
+        sh './gradlew build'
       }
     }
   }
