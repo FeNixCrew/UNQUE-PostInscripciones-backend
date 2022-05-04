@@ -3,9 +3,8 @@ pipeline {
   stages {
     stage('Run tests') {
       steps() {
-        withGradle() {
-          sh './gradlew build'
-        }
+        sh 'chmod +x gradlew'
+        sh './gradlew build jar'
       }
     }
   }
