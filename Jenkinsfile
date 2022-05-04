@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'pruebasCI' }
+  agent any
   stages {
     stage('Run tests') {
       steps() {
