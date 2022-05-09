@@ -1,6 +1,9 @@
 version: 2
 jobs:
   build:
+    branches:
+      only:
+        - pruebasCI
     docker:
       - image: circleci/openjdk:8-jdk
     steps:
@@ -15,7 +18,3 @@ jobs:
           command: |
             mkdir -p ~/junit/
             find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} ~/junit/ \;
-          when: always
- 
-      - store_test_results:
-          path: ~/junit
