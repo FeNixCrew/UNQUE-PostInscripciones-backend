@@ -1,11 +1,10 @@
 package ar.edu.unq.postinscripciones.webservice.controller
 
-import ar.edu.unq.postinscripciones.model.cuatrimestre.Semestre
 import ar.edu.unq.postinscripciones.service.ComisionService
 import ar.edu.unq.postinscripciones.service.CuatrimestreService
+import ar.edu.unq.postinscripciones.service.dto.CuatrimestreDeseado
 import ar.edu.unq.postinscripciones.service.dto.FormularioCuatrimestre
 import io.swagger.annotations.ApiOperation
-import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
 
 @ServiceREST
 @RequestMapping("/api/cuatrimestre")
@@ -45,17 +43,19 @@ class CuatrimestreController {
     @ApiOperation("Endpoint que se usa para obtener al oferta academica de un cuatrimestre")
     @RequestMapping(value = ["/oferta"], method = [RequestMethod.GET])
     fun ofertaAcademica(
-        @ApiParam(value = "Anio del cuatrimestre", example = "2022", required = true)
-        @RequestParam
-        anio: Int,
-        @ApiParam(value = "Semestre deseado", example = "S1", required = true)
-        @RequestParam
-        semestre: Semestre
+        @RequestBody cuatrimestreDeseado: CuatrimestreDeseado?
     ): ResponseEntity<*> {
-        return ResponseEntity(
-            comisionService.ofertaDelCuatrimestre(anio, semestre),
-            HttpStatus.OK
-        )
+        return if (cuatrimestreDeseado != null) {
+            ResponseEntity(
+                comisionService.ofertaDelCuatrimestre(CuatrimestreDeseado.aModelo(cuatrimestreDeseado)),
+                HttpStatus.OK
+            )
+        } else {
+            ResponseEntity(
+                comisionService.ofertaDelCuatrimestre(),
+                HttpStatus.OK
+            )
+        }
     }
 
 }

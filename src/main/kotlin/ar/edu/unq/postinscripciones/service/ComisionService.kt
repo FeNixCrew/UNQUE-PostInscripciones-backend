@@ -3,7 +3,6 @@ package ar.edu.unq.postinscripciones.service
 import ar.edu.unq.postinscripciones.model.Materia
 import ar.edu.unq.postinscripciones.model.comision.Comision
 import ar.edu.unq.postinscripciones.model.cuatrimestre.Cuatrimestre
-import ar.edu.unq.postinscripciones.model.cuatrimestre.Semestre
 import ar.edu.unq.postinscripciones.model.exception.ExcepcionUNQUE
 import ar.edu.unq.postinscripciones.model.exception.MateriaNoEncontradaExcepcion
 import ar.edu.unq.postinscripciones.persistence.ComisionRespository
@@ -27,17 +26,28 @@ class ComisionService {
     private lateinit var cuatrimestreRepository: CuatrimestreRepository
 
     @Transactional
-    fun guardarComisiones(anio: Int, semestre: Semestre, comisionesACrear: List<ComisionACrear>): List<ConflictoComision> {
-        val cuatrimestre = cuatrimestreRepository.findByAnioAndSemestre(anio, semestre)
-            .orElseThrow { ExcepcionUNQUE("Cuatrimestre no encontrado") }
+    fun guardarComisiones(
+        comisionesACrear: List<ComisionACrear>,
+        cuatrimestre: Cuatrimestre = Cuatrimestre.actual()
+    ): List<ConflictoComision> {
+        val existeCuatrimestre = cuatrimestreRepository.findByAnioAndSemestre(cuatrimestre.anio, cuatrimestre.semestre)
+        val cuatrimestreObtenido = if (existeCuatrimestre.isPresent) {
+            existeCuatrimestre.get()
+        } else {
+            cuatrimestreRepository.save(cuatrimestre)
+        }
 
-        return guardarComisionesBuscandoConflictos(comisionesACrear, cuatrimestre)
+        return guardarComisionesBuscandoConflictos(comisionesACrear, cuatrimestreObtenido)
     }
 
     @Transactional
-    fun ofertaDelCuatrimestre(anio: Int, semestre: Semestre): List<ComisionDTO> {
-        return comisionRespository.findByCuatrimestreAnioAndCuatrimestreSemestre(anio, semestre)
-            .map { ComisionDTO.desdeModelo(it) }
+    fun ofertaDelCuatrimestre(cuatrimestre: Cuatrimestre = Cuatrimestre.actual()): List<ComisionDTO> {
+        val oferta = comisionRespository.findByCuatrimestreAnioAndCuatrimestreSemestre(
+            cuatrimestre.anio,
+            cuatrimestre.semestre
+        )
+        chequearSiHayOferta(oferta, cuatrimestre)
+        return  oferta.map { ComisionDTO.desdeModelo(it) }
     }
 
     @Transactional
@@ -81,6 +91,13 @@ class ComisionService {
             guardarComision(comisionACrear, materia, cuatrimestre)
         }
         return comisionesConflictivas
+    }
+
+    private fun chequearSiHayOferta(
+        oferta: List<Comision>,
+        cuatrimestre: Cuatrimestre
+    ) {
+        if (oferta.isEmpty()) throw ExcepcionUNQUE("No hay oferta registrada para el cuatrimestre ${cuatrimestre.anio}, ${cuatrimestre.semestre}")
     }
 
     private fun guardarComision(

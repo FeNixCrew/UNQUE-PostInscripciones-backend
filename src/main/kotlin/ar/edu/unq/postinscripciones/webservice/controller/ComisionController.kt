@@ -1,6 +1,5 @@
 package ar.edu.unq.postinscripciones.webservice.controller
 
-import ar.edu.unq.postinscripciones.model.cuatrimestre.Semestre
 import ar.edu.unq.postinscripciones.service.ComisionService
 import ar.edu.unq.postinscripciones.service.dto.ComisionACrear
 import io.swagger.annotations.ApiOperation
@@ -10,7 +9,10 @@ import io.swagger.annotations.ApiResponses
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 
 @ServiceREST
 @RequestMapping("/api/comision")
@@ -27,16 +29,10 @@ class ComisionController {
         ]
     )
     fun registrarComisiones(
-        @ApiParam(value = "Anio del cuatrimestre", example = "2022", required = true)
-        @RequestParam
-        anio: Int,
-        @ApiParam(value = "Semestre del cuatrimestre deseado", example = "S1", required = true)
-        @RequestParam
-        semestre: Semestre,
-        @RequestBody formularioComision: List<ComisionACrear>
+        @RequestBody ofertaAcademicaACargar: List<ComisionACrear>,
     ): ResponseEntity<*> {
         return ResponseEntity(
-            comisionService.guardarComisiones(anio, semestre, formularioComision),
+            comisionService.guardarComisiones(ofertaAcademicaACargar),
             HttpStatus.CREATED
         )
     }
