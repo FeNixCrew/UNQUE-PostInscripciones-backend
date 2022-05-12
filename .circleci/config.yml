@@ -1,9 +1,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - pruebasCI
     docker:
       - image: circleci/openjdk:8-jdk
     steps:
